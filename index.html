@@ -1,189 +1,202 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>استعلام رواتب الموظفين</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استعلام بيانات الموظف</title>
 
-  <style>
-    body {
-      font-family: "Cairo", sans-serif;
-      background: linear-gradient(180deg, #003366, #0066cc);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 15px;
-    }
+<style>
+  body {
+    font-family: "Cairo", sans-serif;
+    background: #e9eef6;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
 
-    .container {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 25px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 430px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-      animation: fadeIn 0.5s ease;
-    }
+  .container {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255,255,255,0.8);
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 10px 10px 28px #b8c0d3, -10px -10px 28px #ffffff;
+    animation: fade 0.4s ease;
+  }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 22px;
-      letter-spacing: 1px;
-    }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2a2a2a;
+    font-size: 24px;
+  }
 
-    label {
-      font-size: 15px;
-      margin-bottom: 6px;
-      display: block;
-    }
+  .input-group {
+    margin-bottom: 20px;
+  }
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      margin-bottom: 18px;
-      font-size: 16px;
-      outline: none;
-      background: rgba(255, 255, 255, 0.85);
-    }
+  label {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+  }
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #fff;
-      color: #003366;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+  input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 15px;
+    border: none;
+    background: #f0f4fa;
+    box-shadow: inset 3px 3px 7px #c0c8d7, inset -3px -3px 7px #ffffff;
+    font-size: 16px;
+    outline: none;
+  }
 
-    button:hover {
-      background: #e6e6e6;
-      transform: scale(1.03);
-    }
+  button {
+    width: 100%;
+    background: #0066ff;
+    border: none;
+    padding: 14px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 3px 3px 10px #b8c0d3;
+    transition: 0.3s;
+  }
 
-    .result {
-      margin-top: 20px;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 12px;
-      font-size: 15px;
-      display: none;
-    }
+  button:hover {
+    background: #0052cc;
+    transform: scale(1.02);
+  }
 
-    .result p {
-      margin: 6px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      padding-bottom: 4px;
-    }
+  .result {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #ffffffd9;
+    box-shadow: 5px 5px 15px #b8c0d3, -5px -5px 15px #ffffff;
+    animation: fade 0.4s ease;
+  }
 
-    /* Loader */
-    .loader {
-      border: 4px solid rgba(255,255,255,0.3);
-      border-top: 4px solid #fff;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      margin: 10px auto;
-      animation: spin 0.8s linear infinite;
-    }
+  .item {
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e6ee;
+    font-size: 15px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+  .item:last-child {
+    border-bottom: none;
+  }
 
-    /* تحسين الموبايل */
-    @media (max-width: 480px) {
-      .container {
-        padding: 18px;
-        border-radius: 18px;
-      }
-      h2 {
-        font-size: 20px;
-      }
-      button, input {
-        font-size: 15px;
-      }
-      .result {
-        font-size: 14px;
-      }
-    }
-  </style>
+  .icon {
+    font-size: 18px;
+    color: #0066ff;
+  }
+
+  .loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #d0d6e1;
+    border-top: 4px solid #0066ff;
+    border-radius: 50%;
+    margin: 15px auto;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <h2>استعلام بيانات الموظف</h2>
 
-    <label for="national_id">الرقم القومي:</label>
-    <input type="text" id="national_id" placeholder="أدخل الرقم القومي">
+<div class="container">
 
-    <button onclick="fetchData()">عرض البيانات</button>
+  <h2>استعلام بيانات الموظف</h2>
 
-    <div id="result" class="result"></div>
+  <div class="input-group">
+    <label for="national_id">الرقم القومي</label>
+    <input id="national_id" type="text" placeholder="أدخل الرقم القومي">
   </div>
 
+  <button onclick="fetchData()">عرض البيانات</button>
+
+  <div id="result" class="result"></div>
+</div>
+
 <script>
-/* 🔥 هنا رابطك الأصلي بدون أي تغيير 🔥 */
-const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDm_oObx55eC-Wk3l1VLgAsm0eQZ9YDLGU0cjJnwvzzu3sptN6V4CFcavYaho8e8nBYA/exec";
+const APP_SCRIPT_URL =
+ "https://script.google.com/macros/s/AKfycbwDm_oObx55eC-Wk3l1VLgAsm0eQZ9YDLGU0cjJnwvzzu3sptN6V4CFcavYaho8e8nBYA/exec";
 
 async function fetchData() {
-  const nationalId = document.getElementById("national_id").value.trim();
-  const resultDiv = document.getElementById("result");
+  const id = document.getElementById("national_id").value.trim();
+  const result = document.getElementById("result");
 
-  if (!nationalId) {
-    resultDiv.style.display = "block";
-    resultDiv.innerHTML = "<p>من فضلك أدخل الرقم القومي</p>";
+  if (!id) {
+    result.style.display = "block";
+    result.innerHTML = "<p>من فضلك أدخل الرقم القومي</p>";
     return;
   }
 
-  resultDiv.style.display = "block";
-  resultDiv.innerHTML = '<div class="loader"></div><p style="text-align:center;">جارٍ تحميل البيانات...</p>';
+  result.style.display = "block";
+  result.innerHTML = '<div class="loader"></div><p style="text-align:center;">جارٍ التحميل...</p>';
 
   try {
-    const response = await fetch(`${APP_SCRIPT_URL}?national_id=${nationalId}`);
+    const response = await fetch(`${APP_SCRIPT_URL}?national_id=${id}`);
     const data = await response.json();
 
     if (data.error) {
-      resultDiv.innerHTML = `<p>${data.error}</p>`;
-    } else {
-      resultDiv.innerHTML = `
-        <p><strong>الاسم:</strong> ${data.name}</p>
-        <p><strong>الراتب:</strong> ${data.salary}</p>
-        <p><strong>تأمينات اجتماعية:</strong> ${data.social_insurance}</p>
-        <p><strong>الإضافي:</strong> ${data.extra}</p>
-        <p><strong>نسبة المباشرة:</strong> ${data.attendance_ratio}</p>
-        <p><strong>الحوافز:</strong> ${data.incentives}</p>
-        <p><strong>قيمة أيام الغياب:</strong> ${data.absence_days_value}</p>
-        <p><strong>قيمة جزاء الغياب:</strong> ${data.absence_penalty}</p>
-        <p><strong>الضرائب الإجمالية:</strong> ${data.total_taxes}</p>
-        <p><strong>الانتقالات:</strong> ${data.transportation}</p>
-        <p><strong>بدل انتظام:</strong> ${data.attendance_allowance}</p>
-        <p><strong>بدل إشراف:</strong> ${data.supervision_allowance}</p>
-        <p><strong>بدل طبيعة عمل:</strong> ${data.work_nature_allowance}</p>
-        <p><strong>بدل وردية:</strong> ${data.shift_allowance}</p>
-        <p><strong>كشف طبي:</strong> ${data.medical_check}</p>
-        <p><strong>الإجمالي:</strong> ${data.total}</p>
-      `;
+      result.innerHTML = `<p>${data.error}</p>`;
+      return;
     }
-  } catch (error) {
-    resultDiv.innerHTML = "<p>حدث خطأ في الاتصال، حاول مرة أخرى.</p>";
+
+    result.innerHTML = `
+      ${createItem("👤", "الاسم", data.name)}
+      ${createItem("💰", "الراتب", data.salary)}
+      ${createItem("🛡️", "التأمينات", data.social_insurance)}
+      ${createItem("➕", "الإضافي", data.extra)}
+      ${createItem("📊", "نسبة المباشرة", data.attendance_ratio)}
+      ${createItem("🎁", "الحوافز", data.incentives)}
+      ${createItem("📅", "قيمة أيام الغياب", data.absence_days_value)}
+      ${createItem("⚠️", "جزاء الغياب", data.absence_penalty)}
+      ${createItem("💸", "الضرائب", data.total_taxes)}
+      ${createItem("🚗", "الانتقالات", data.transportation)}
+      ${createItem("🟦", "بدل انتظام", data.attendance_allowance)}
+      ${createItem("🟨", "بدل إشراف", data.supervision_allowance)}
+      ${createItem("🟩", "بدل طبيعة عمل", data.work_nature_allowance)}
+      ${createItem("🌙", "بدل وردية", data.shift_allowance)}
+      ${createItem("⚕️", "كشف طبي", data.medical_check)}
+      ${createItem("🧮", "الإجمالي", data.total)}
+    `;
+  } catch {
+    result.innerHTML = "<p>حدث خطأ في الاتصال. حاول مرة أخرى.</p>";
   }
+}
+
+function createItem(icon, title, value) {
+  return `
+    <div class="item">
+      <span class="icon">${icon}</span>
+      <strong>${title}:</strong> ${value}
+    </div>
+  `;
 }
 </script>
 
