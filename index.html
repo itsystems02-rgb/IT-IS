@@ -8,7 +8,8 @@
 <style>
   body {
     font-family: "Cairo", sans-serif;
-    background: #e9eef6;
+    background: linear-gradient(180deg, #0c1b33, #112b4a);
+    color: #e4e8f1;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -19,10 +20,11 @@
   .container {
     width: 100%;
     max-width: 420px;
-    background: rgba(255,255,255,0.8);
+    background: rgba(18, 39, 67, 0.55);
     padding: 25px;
-    border-radius: 25px;
-    box-shadow: 10px 10px 28px #b8c0d3, -10px -10px 28px #ffffff;
+    border-radius: 22px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.45);
     animation: fade 0.4s ease;
   }
 
@@ -33,70 +35,70 @@
 
   h2 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #2a2a2a;
-    font-size: 24px;
-  }
-
-  .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    color: #dce6ff;
+    font-size: 23px;
   }
 
   label {
     font-size: 15px;
-    color: #333;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: block;
+    color: #d7deef;
   }
 
   input {
     width: 100%;
-    padding: 14px;
-    border-radius: 15px;
-    border: none;
-    background: #f0f4fa;
-    box-shadow: inset 3px 3px 7px #c0c8d7, inset -3px -3px 7px #ffffff;
-    font-size: 16px;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 17px;
     outline: none;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.35);
+  }
+
+  input::placeholder {
+    color: #9fb1cc;
   }
 
   button {
     width: 100%;
-    background: #0066ff;
-    border: none;
     padding: 14px;
-    border-radius: 15px;
-    color: white;
-    font-weight: bold;
+    border: none;
+    border-radius: 14px;
     font-size: 17px;
+    color: white;
     cursor: pointer;
-    box-shadow: 3px 3px 10px #b8c0d3;
+    background: linear-gradient(90deg, #1f6fff, #4ea6ff);
+    box-shadow: 0 5px 15px rgba(0, 102, 255, 0.3);
     transition: 0.3s;
   }
 
   button:hover {
-    background: #0052cc;
-    transform: scale(1.02);
+    transform: scale(1.03);
+    box-shadow: 0 7px 20px rgba(0, 102, 255, 0.45);
   }
 
   .result {
     display: none;
     margin-top: 25px;
-    padding: 20px;
-    border-radius: 20px;
-    background: #ffffffd9;
-    box-shadow: 5px 5px 15px #b8c0d3, -5px -5px 15px #ffffff;
-    animation: fade 0.4s ease;
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
   }
 
   .item {
-    padding: 10px 0;
-    border-bottom: 1px solid #e2e6ee;
-    font-size: 15px;
-    color: #333;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #e7edfa;
+    font-size: 15px;
   }
 
   .item:last-child {
@@ -105,21 +107,20 @@
 
   .icon {
     font-size: 18px;
-    color: #0066ff;
+    color: #4ea6ff;
   }
 
   .loader {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #d0d6e1;
-    border-top: 4px solid #0066ff;
+    width: 38px;
+    height: 38px;
+    border: 4px solid rgba(255,255,255,0.18);
+    border-top: 4px solid #4ea6ff;
     border-radius: 50%;
-    margin: 15px auto;
-    animation: spin 0.6s linear infinite;
+    margin: 12px auto;
+    animation: spin 0.7s linear infinite;
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
 </style>
@@ -131,10 +132,8 @@
 
   <h2>استعلام بيانات الموظف</h2>
 
-  <div class="input-group">
-    <label for="national_id">الرقم القومي</label>
-    <input id="national_id" type="text" placeholder="أدخل الرقم القومي">
-  </div>
+  <label for="national_id">الرقم القومي</label>
+  <input id="national_id" type="text" placeholder="أدخل الرقم القومي">
 
   <button onclick="fetchData()">عرض البيانات</button>
 
@@ -174,7 +173,7 @@ async function fetchData() {
       ${createItem("➕", "الإضافي", data.extra)}
       ${createItem("📊", "نسبة المباشرة", data.attendance_ratio)}
       ${createItem("🎁", "الحوافز", data.incentives)}
-      ${createItem("📅", "قيمة أيام الغياب", data.absence_days_value)}
+      ${createItem("📅", "أيام الغياب", data.absence_days_value)}
       ${createItem("⚠️", "جزاء الغياب", data.absence_penalty)}
       ${createItem("💸", "الضرائب", data.total_taxes)}
       ${createItem("🚗", "الانتقالات", data.transportation)}
